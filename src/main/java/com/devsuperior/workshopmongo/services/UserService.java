@@ -22,10 +22,7 @@ public class UserService {
         return userList.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
     }
     public UserDTO findById(String id){
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
-            return new UserDTO(user.get());
-        }
-        throw new ObjectNotFoundException("Objeto não foi encontrado");
+       User user = userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+        return new UserDTO(user);
     }
 }
